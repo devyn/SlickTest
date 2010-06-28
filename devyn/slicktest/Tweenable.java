@@ -50,11 +50,15 @@ public class Tweenable {
 
         for (TweenTarget t : targets) {
             if (!done.contains(t.name)) {
-                float cv = properties.get(t.name).floatValue();
-                float sp = (t.dest - cv) / t.time;
-                properties.put(t.name, cv + sp * delta);
-                t.time -= delta;
-                if (t.time < 1) forRemoval.add(t);
+                if (t.time < delta) {
+                    properties.put(t.name, t.dest);
+                    forRemoval.add(t);
+                } else {
+                    float cv = properties.get(t.name).floatValue();
+                    float sp = (t.dest - cv) / t.time;
+                    properties.put(t.name, cv + sp * delta);
+                    t.time -= delta;
+                }
                 done.add(t.name);
             }
         }

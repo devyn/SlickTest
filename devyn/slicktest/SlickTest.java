@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -21,6 +22,9 @@ public class SlickTest extends BasicGame {
 
     @Override
     public void init(GameContainer c) throws SlickException {
+        c.setShowFPS(false);
+        c.setTargetFrameRate(100);
+        c.setVSync(true);
         try {
             o = new TOval();
             o.jump("la", 255);
@@ -52,10 +56,23 @@ public class SlickTest extends BasicGame {
     @Override
     public void mousePressed(int button, int x, int y) {
         try {
-            o.target("x", x, 500);
-            o.target("y", y, 500);
+            if (button == Input.MOUSE_LEFT_BUTTON) {
+                o.target("x", x, 500);
+                o.target("y", y, 500);
+            } else if (button == Input.MOUSE_RIGHT_BUTTON) {
+                o.target("fr", x % 255, 500);
+                o.target("fg", y % 255, 500);
+                o.target("fb", 0, 500);
+            }
         } catch (Exception ex) {
             Logger.getLogger(SlickTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void keyPressed(int key, char c) {
+        if (key == Input.KEY_ESCAPE) {
+            System.exit(0);
         }
     }
 

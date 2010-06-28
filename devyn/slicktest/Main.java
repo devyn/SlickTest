@@ -15,7 +15,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Starting game...");
+        Logger.getLogger(Main.class.getName()).log(Level.INFO, "Starting game...");
         AppGameContainer c;
         try {
             c = new AppGameContainer(new SlickTest(), 800, 600, false);
